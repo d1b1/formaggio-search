@@ -8,7 +8,7 @@ BB example that add in layers of abstractions. I wrote this
 to remind myself of how to build fast and quickly and keep
 the code super easy to read.
 
-Does not include:
+### Does not include:
 * AMD
 * Require.js
 * Browserify
