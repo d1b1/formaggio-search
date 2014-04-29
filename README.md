@@ -1,4 +1,4 @@
-## Bare-bones Backbone.js App using api.formagg.io
+## Bare-bones Backbone.js App using formagg.io!
 
 This is a simple Backbone.js app. It uses standard
 view and HTML script urls and templates. No layout manager
