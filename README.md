@@ -15,3 +15,11 @@ that come with require.js, AMD, gulp or grunt.
 ### Learn more about the formagg.io API
 <http://api.formagg.io/> - Formagg.io is a cheese API, with
 a mission to map the artisan cheeses of the world.
+
+### Coming SOON!
+The following features are my wish list.
+
+* Local Storage Plugin for Backbone Collections.
+* Infinite scroll.
+* Collection Paging.
+* List vs Panel view.
