@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Backbone.js API Search Demo</title>
+  <!-- load the bootstrap stylesheet -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+  <!-- load the libraries we need -->
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+  <!-- load our scripts -->
+  <script type="text/javascript" src="js/router.js"></script>
+  <script type="text/javascript" src="js/models/models.js"></script>
+  <script type="text/javascript" src="js/views/index.js"></script>
+  <script type="text/javascript" src="js/views/tr.js"></script>
+  <script type="text/javascript" src="js/views/new.js"></script>
+  <script type="text/javascript" src="js/views/edit.js"></script>
+  <script type="text/javascript" src="js/views/detail.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Formaggio Search</h1>
+      <p class="lead">
+        Simple search for the formagg.io Cheese API.
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7" id="primary-content">
+        <!-- the container that gets populated with the index -->
+      </div>
+      <div class="col-md-5">
+          <!-- we are going to debug our backbone collection here -->
+          <code id="output" style="height: 900px; overflow: hidden; display:block;white-space:pre-wrap;"></code>
+      </div>
+    </div>
+  </div>
+
+  <!-- the form, used for create and edit -->
+  <script type="text/jst" id="formTemplate">
+    <div class="well">
+      <h2>Add a Cheese</h2>
+      <div class="alert alert-danger fade in" style="display:none;"></div>
+      <form>
+        <h2><%= title %></h2>
+        <div class="form-group">
+          <label>Title:</label>
+          <input type="text" class="form-control" name="title" value="<%= title %>" />
+        </div>
+        <div class="form-group">
+          <label>Author:</label>
+          <input type="text" class="form-control" name="author" value="<%= author %>" />
+        </div>
+        <div class="form-group">
+          <label>Description:</label>
+          <textarea class="form-control" rows="5" name="description"><%= description %></textarea>
+        </div>
+        <button class="save btn btn-large btn-info" type="submit">Save</button>
+        <a href="#cheeses/index" class="btn btn-large">Cancel</a>
+      </form>
+    </div>
+  </script>
+
+  <!-- the index container -->
+  <script type="text/template" id="indexTemplate">
+    <div id="search" class="well">
+      <input type="text" value="<%= term %>" class="textSearch form-control" placeholder="Search for a cheese...">
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th width="10%"></th>
+          <th width="45%">Name</th>
+          <th width="40%">Maker</th>
+          <th width="15%">Milk</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>
+
+  <!-- the row template, renders once for each item in the index -->
+  <script type="text/template" id="rowTemplate">
+    <td>
+      <img src="<%= image || '' %>" class="img-rounded img-responsive">
+    </td>
+    <td>
+      <a href="#cheese/<%= _id %>/view">
+         <%= name %>
+      </a>
+    </td>
+    <td><%= maker %></td>
+    <td><%= source %></td>
+  </script>
+
+  <!-- the show template -->
+  <script type="text/template" id="showTemplate">
+    <ol class="breadcrumb">
+      <li>
+        <a href="#cheese/index">All Cheeses</a>
+      </li>
+      <li class="active">Details</li>
+    </ol>
+
+    <h2>
+      <%= title %>
+      <small>by: <%= maker || '' %></small>
+    </h2>
+
+    <img src="<%= image || '' %>" class="img-rounded img-responsive">
+
+    <p style="white-space:pre-wrap;"><%= description %></p>
+    <hr/>
+  </script>
+
+  <!-- kick off the app -->
+  <script type="text/javascript">
+    var router = new APP.Router({
+      collection: new APP.CheeseCollection()
+    });
+
+    // TODO: Add in the local storage for collections.
+    router.cheeses.reset([
+      // Add in a local storage option.
+    ]);
+
+    // now that everyting is setup we tell backbone to watch the urls
+    Backbone.history.start();
+  </script>
+</body>
+</html>
