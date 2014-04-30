@@ -7,7 +7,8 @@
   <!-- load the libraries we need -->
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.1/backbone-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.7/backbone.localStorage.js"></script>
   <!-- load our scripts -->
   <script type="text/javascript" src="js/router.js"></script>
   <script type="text/javascript" src="js/models/models.js"></script>
@@ -16,6 +17,45 @@
   <script type="text/javascript" src="js/views/new.js"></script>
   <script type="text/javascript" src="js/views/edit.js"></script>
   <script type="text/javascript" src="js/views/detail.js"></script>
+
+  <style>
+  .spinner {
+    display: inline-block;
+    opacity: 0;
+    width: 0;
+
+    -webkit-transition: opacity 0.25s, width 0.25s;
+    -moz-transition: opacity 0.25s, width 0.25s;
+    -o-transition: opacity 0.25s, width 0.25s;
+    transition: opacity 0.25s, width 0.25s;
+  }
+
+  .has-spinner.active {
+    cursor:progress;
+  }
+
+  .has-spinner.active .spinner {
+    opacity: 1;
+    width: auto; /* This doesn't work, just fix for unkown width elements */
+  }
+
+  .has-spinner.btn-mini.active .spinner {
+      width: 10px;
+  }
+
+  .has-spinner.btn-small.active .spinner {
+      width: 13px;
+  }
+
+  .has-spinner.btn.active .spinner {
+      width: 16px;
+  }
+
+  .has-spinner.btn-large.active .spinner {
+      width: 19px;
+  }
+  </style>
+
 </head>
 <body>
 
@@ -31,12 +71,12 @@
     </div>
 
     <div class="row">
-      <div class="col-md-7" id="primary-content">
+      <div class="col-md-7" id="primary-content" style="overflow: auto|scroll;">
         <!-- the container that gets populated with the index -->
       </div>
       <div class="col-md-5">
           <!-- we are going to debug our backbone collection here -->
-          <code id="output" style="height: 900px; overflow: hidden; display:block;white-space:pre-wrap;"></code>
+          <code id="output" style="height: 500px; overflow: hidden; display: block;white-space:pre-wrap;"></code>
       </div>
     </div>
   </div>
@@ -82,6 +122,12 @@
       </thead>
       <tbody></tbody>
     </table>
+    <a class="btn btn-small btn-success has-spinner">
+    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+    Foo
+  </a>
+  
+    <a href="javascript:;" class="more">more</a>
   </script>
 
   <!-- the row template, renders once for each item in the index -->
@@ -120,14 +166,17 @@
 
   <!-- kick off the app -->
   <script type="text/javascript">
+
     var router = new APP.Router({
       collection: new APP.CheeseCollection()
     });
 
     // TODO: Add in the local storage for collections.
-    router.cheeses.reset([
-      // Add in a local storage option.
-    ]);
+    // router.cheeses.reset([
+    //   {
+    //     _id: '1111', name: 'asdasdf'
+    //   }
+    // ]);
 
     // now that everyting is setup we tell backbone to watch the urls
     Backbone.history.start();

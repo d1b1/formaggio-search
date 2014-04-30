@@ -29,12 +29,15 @@ APP.CheeseCollection = Backbone.Collection.extend({
 
   model: APP.CheeseModel,
 
+  // localStorage: new Backbone.LocalStorage("cheese-models"),
+
   initialize: function(options) {
     this.term = "Blue";
+    this.page = 1;
   },
 
   url: function() {
-    return 'http://api.formagg.io/cheese/search?size=20&name=' + ( this.term || '' );
+    return 'http://api.formagg.io/cheese/search?page=' + this.page + '&size=2&name=' + ( this.term || '' );
   },
 
   parse: function(data) {
